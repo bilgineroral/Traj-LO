@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>trajlo</name>
+  <version>0.0.0</version>
+  <description>Lightweight trajlo package for ROS2 </description>
+
+  <maintainer email="you@example.com">Your Name</maintainer>
+  <license>Apache 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tbb</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+
