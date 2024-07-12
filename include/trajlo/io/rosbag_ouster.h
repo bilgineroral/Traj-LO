@@ -75,7 +75,6 @@ class RosbagOuster : public DataLoader {
     int step = msg->point_step;
 
     double tbase = msg->header.stamp.sec + msg->header.stamp.nanosec * 1e-9; // => çöküyor
-    /* std::cout << "TBASE: " << tbase << std::endl; */
 
     float x, y, z, intensity;
     double ts;
@@ -86,13 +85,8 @@ class RosbagOuster : public DataLoader {
       intensity = sensor_msgs::readPointCloud2BufferValue<float>(&msg->data[j * step + i_offset], msg->fields[i_idx].datatype);
       ts = sensor_msgs::readPointCloud2BufferValue<double>(&msg->data[j * step + ts_offset], msg->fields[ts_idx].datatype);
 
-      /* std::cout << "DEBUG_4: x: " << x << " y: " << y << " z: " << z << " intensity: " 
-              << intensity << " ts: " << ts << std::endl; */
-
       float r = x * x + y * y + z * z;
       if (r < 0.1) continue;
-
-      /* std::cout << "NOT CONTINUED\n"; */
         
       PointXYZIT p{x, y, z, intensity, tbase + ts * 1e-9};
       scan->points.push_back(p);
@@ -114,13 +108,6 @@ class RosbagOuster : public DataLoader {
       }
   }
 
-  /* template<typename T>
-  T readPointCloud2BufferValue(const unsigned char *data_ptr, uint8_t datatype) {
-    T value;
-    std::memcpy(&value, data_ptr, sizeof(T));
-    return value;
-  }
- */
   static inline int getPointCloud2FieldIndex (const sensor_msgs::msg::PointCloud2 &cloud, const std::string &field_name) {
     // Get the index we need
     for (size_t d = 0; d < cloud.fields.size(); ++d)

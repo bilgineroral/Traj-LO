@@ -1,8 +1,21 @@
-<div align="center">
-    <h1>ROS2 fork for Traj-LO algorithm</h1>
-</div>
+## ROS2 fork for Traj-LO algorithm
 
-This fork contains ROS2 implementation of the Traj-LO repository by @kevin2431 (https://github.com/kevin2431).
+This fork contains lightweight (no GUI) ROS2 implementation of the Traj-LO repository by [@kevin2431](https://github.com/kevin2431) and the [paper](https://ieeexplore.ieee.org/document/10387726) for trajectory estimation.
+
+Tested and successfully run on ROS2 Humble on Ubuntu 22.04.
+
+### Installation
+1. `mkdir -p ros2_ws/src && cd ros2_ws`
+2. `git clone --recursive https://github.com/bilgineroral/Traj-LO.git ./src/Traj-LO`
+3. `./src/Traj-LO/src/scripts/install_deps.sh`
+4. `source /opt/ros/humble/setup.sh` (adjust this to your ROS2 installation path)
+5. `colcon build --symlink-install --packages-select trajlo`
+
+### Running
+1. From the root of the workspace (`ros2_ws` directory), run `source install/setup.sh` to source the overlay. Run the Traj-LO algorithm with `ros2 run trajlo trajlo ./src/Traj-LO/data/config_ouster.yaml`. Do not forget to adjust the topic name to your ROS2 bag's topic name. Note that the algorithm runs only with config_ouster.yaml for now, and that "path: " field makes no sense.
+2. After running the algorithm, open up another terminal, source your ROS2 installation, then run `ros2 bag play your_rosbag_folder` start playing your ros2 bag (you may need to adjust the paths again).
+3. The algorithm publishes the estimated trajectory information on topic `/trajlo_pose` with message type `geometry_msgs/msg/PoseStamped`. In order to record the estimated trajectory, open up another terminal, source your ROS2 installation and run `ros2 bag record -o output_bag /trajlo_pose`. After the `ros2 bag play` command publishes all of its messages, you may simply `Ctrl^C` do stop recording.
+4. Finally, you may use the [evo](https://pypi.org/project/evo/) package to evaluate the trajectories after being saved in a ROS2 bag.
 
 <div align="center">
     <h1>Traj-LO</h1>
@@ -17,8 +30,8 @@ This fork contains ROS2 implementation of the Traj-LO repository by @kevin2431 (
 
 </div>
     <br>
-    <img src="doc/image/trajectory.png" width="50%" height="auto" alt="Trajectory Image">
-    <img src="doc/image/pipeline.png" width="40%" height="auto" alt="Pipeline Image">
+    <img src="src/doc/image/trajectory.png" width="50%" height="auto" alt="Trajectory Image">
+    <img src="src/doc/image/pipeline.png" width="40%" height="auto" alt="Pipeline Image">
 <br>
 </div>
 
@@ -56,28 +69,10 @@ Since Traj-LO is a LiDAR-only method, it may fail in narrow spaces where there a
 ### Dependency
 In addition to the ROSbag data loader, Traj-LO also provides a simple custom GUI for visualization and uses Eigen-based Gauss-Newton for pose optimization. Here are the major libraries we will use.
 - Optimization: [Eigen](https://gitlab.com/libeigen/eigen.git), [Sophus](https://github.com/strasdat/Sophus.git)
-- GUI: [ImGui](https://github.com/ocornut/imgui), OpenGL, [GLM](https://github.com/g-truc/glm.git)
 - DataLoader: oneTBB, Boost
 
 Although major dependencies are included in the third-party folder, you may still need to run the script `install_deps.sh` to install libraries like Boost, etc.
-### Build
-You can install the Traj-LO project by following these steps:
-```
-git clone --recursive https://github.com/kevin2431/Traj-LO.git
-cd Traj-LO
-./scripts/install_deps.sh # make sure we have all the dependency
-mkdir build && cd build
-cmake .. 
-make -j8
-```
 
-
-
-### Run
-After modifying the config file for your environment, you can run Traj-LO. Here is an example to test it with a Livox LiDAR.
-```
-./trajlo ../data/config_livox.yaml
-```
 
 ### Some Tips
 - Traj-LO is a continuous-time method, so each point in your rosbag should have a corresponding timestamp.
@@ -85,13 +80,11 @@ After modifying the config file for your environment, you can run Traj-LO. Here 
 
 ## Cross-platform Support
 ### Linux
-Ubuntu 20.04, 22.04
+Ubuntu 22.04
 ### Windows
 You can use [WSL2](https://learn.microsoft.com/zh-cn/windows/wsl/about) to install the Ubuntu subsystem and then follow the above instructions to test Traj-LO. To enable OpenGL accelerated rendering in WSLg, you may need to [select Nvidia GPU](https://github.com/microsoft/wslg/wiki/GPU-selection-in-WSLg).
 ### MacOS
 Make sure you have [Homebrew](https://brew.sh/) to run the srcipt `install_deps.sh`to install dependencies. We have tested Traj-LO on M2 Mac Mini (macOS 14.4.1).
-### ROS
-Still working on it!
 
 ## Citation
 
