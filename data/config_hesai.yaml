@@ -4,7 +4,6 @@
 dataset:
   data_type: "bag_hesai"
   topic: "/ls128/lslidar"
-  path: "/home/bil/dst.bag"
 
 trajectory:
   init_interval: 3e8

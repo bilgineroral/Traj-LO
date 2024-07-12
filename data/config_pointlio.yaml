@@ -3,7 +3,6 @@
 dataset:
   data_type: "bag_livox"
   topic: "/ls128/lslidar"
-  path: "/home/bil/dst.bag"
 
 trajectory:
   init_interval: 0.5e8

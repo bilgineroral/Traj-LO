@@ -32,7 +32,6 @@ namespace traj {
         // read dataset config
         type = config["dataset"]["data_type"].as<std::string>();
         topic=config["dataset"]["topic"].as<std::string>();
-        dataset_path = config["dataset"]["path"].as<std::string>();
 
         // read trajectory config
         init_interval = config["trajectory"]["init_interval"].as<double>();

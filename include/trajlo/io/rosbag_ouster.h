@@ -32,7 +32,6 @@ SOFTWARE.
 #include <string>
 
 #include <sensor_msgs/msg/point_cloud2.hpp>
-#include <std_msgs/msg/bool.hpp>
 #include <sensor_msgs/point_cloud_conversion.h>
 
 namespace traj {
@@ -44,12 +43,8 @@ class RosbagOuster : public DataLoader {
   void publish(const std::string &path, const std::string &topic) override {
     subscription_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
       topic, 10, std::bind(&RosbagOuster::topic_callback, this, std::placeholders::_1));
-
-    end_signal_sub_ = this->create_subscription<std_msgs::msg::Bool>(
-      "end_signal", 10, std::bind(&RosbagOuster::end_signal_callback, this, std::placeholders::_1));
     
-    std::cout << "Subscribed to " << topic << std::endl;
-    RCLCPP_INFO(this->get_logger(), "Subscribed to %s", topic.c_str());
+      RCLCPP_INFO(this->get_logger(), "Subscribed to %s", topic.c_str());
   }
 
  private:
@@ -117,8 +112,7 @@ class RosbagOuster : public DataLoader {
   }
 
   rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr subscription_;
-  rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr end_signal_sub_;
-  int n;
+  int n; // message counter
 };
 
 }  // namespace traj

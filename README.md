@@ -12,7 +12,7 @@ Tested and successfully run on ROS2 Humble on Ubuntu 22.04.
 5. `colcon build --symlink-install --packages-select trajlo`
 
 ### Running
-1. From the root of the workspace (`ros2_ws` directory), run `source install/setup.sh` to source the overlay. Run the Traj-LO algorithm with `ros2 run trajlo trajlo ./src/Traj-LO/data/config_ouster.yaml`. Do not forget to adjust the topic name to your ROS2 bag's topic name. Note that the algorithm runs only with config_ouster.yaml for now, and that "path: " field makes no sense.
+1. From the root of the workspace (`ros2_ws` directory), run `source install/setup.sh` to source the overlay. Run the Traj-LO algorithm with `ros2 run trajlo trajlo ./src/Traj-LO/data/config_ouster.yaml`. Do not forget to adjust the topic name to your ROS2 bag's topic name. Note that the algorithm runs only with config_ouster.yaml for now.
 2. After running the algorithm, open up another terminal, source your ROS2 installation, then run `ros2 bag play your_rosbag_folder` start playing your ros2 bag (you may need to adjust the paths again).
 3. The algorithm publishes the estimated trajectory information on topic `/trajlo_pose` with message type `geometry_msgs/msg/PoseStamped`. In order to record the estimated trajectory, open up another terminal, source your ROS2 installation and run `ros2 bag record -o output_bag /trajlo_pose`. After the `ros2 bag play` command publishes all of its messages, you may simply `Ctrl^C` do stop recording.
 4. Finally, you may use the [evo](https://pypi.org/project/evo/) package to evaluate the trajectories after being saved in a ROS2 bag.

@@ -1,7 +1,6 @@
 dataset:
   data_type: "bag_ouster"
   topic: "/robot/lidar"
-  path: "/home/bil/aggressive_spinning.bag"
 
 trajectory:
   init_interval: 3e8 # "use the points collected within the first 0.3s for map initialization"

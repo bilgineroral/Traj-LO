@@ -5,7 +5,6 @@
 dataset:
   data_type: "bag_velodyne"
   topic: "/velodyne_points"
-  path: "/home/zx/Data/Disk2/ICCV2023-LIO-Challenage/SubT_MRS_Final_Challenge_UGV1/subset.bag"
 
 trajectory:
   init_interval: 3e8

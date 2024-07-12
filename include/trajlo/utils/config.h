@@ -36,7 +36,6 @@ struct TrajConfig {
   // dataset
   std::string type;
   std::string topic;
-  std::string dataset_path;
 
   // trajectory
   double init_interval;
